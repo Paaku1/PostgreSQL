@@ -9,6 +9,8 @@ function AddUser() {
     location: ''
   });
 
+  const [err, setErr] = useState('');
+
   const handleChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
@@ -23,10 +25,12 @@ function AddUser() {
       .catch(error => {
         alert('Error adding user');
         console.error('Error:', error);
+        setErr(`Invalid Input ${error}`);
       });
   };
 
   return (
+    <div>
     <form onSubmit={handleSubmit}>
       <h2>Add User</h2>
       <label>
@@ -47,6 +51,8 @@ function AddUser() {
       </label>
       <button type="submit">Add User</button>
     </form>
+  <p>{err}</p>
+    </div>
   );
 }
 

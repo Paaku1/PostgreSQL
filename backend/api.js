@@ -48,3 +48,17 @@ app.post('/users', (req, res)=> {
         }
     });
 })
+
+app.delete('/users/:id', (req, res) => {
+    const { id } = req.params;
+    const deleteQuery = `delete from users where id = $1`;
+
+    client.query(deleteQuery, [id], (err, result) => {
+        if (err) {
+            console.log(err.message);
+            return res.send(500).send('!!! Failed to delete user Data !!!');
+        }else{
+            res.send('User Deleted Successfully!!')
+        }
+    });
+});

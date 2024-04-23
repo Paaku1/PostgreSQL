@@ -12,16 +12,32 @@ function UsersList() {
       .catch(error => console.error('Error fetching users:', error));
   }, []);
 
-  return (
-    <div>
-      <h2>Users List</h2>
-      <ul>
-        {users.map(user => (
-          <li key={user.id}>{user.firstName} {user.lastName}</li>
-        ))}
-      </ul>
-    </div>
-  );
-}
+  const deleteUser = (id) => {
+    axios.delete(`http://localhost:3300/users/${id}`)
+      .then(() => {
+        alert('User Deleted Successfully');
+        window.location.reload(true);
+      })
+      .catch(error => {
+        alert('Error deleting user');
+        console.error('Error:', error);
+      });
 
-export default UsersList;
+  };
+
+    return (
+      <div>
+        <h2>Users List</h2>
+        <ul>
+          {users.map(user => (
+            <div key={user.id}>
+              <li><b>ID:</b> {user.id}<br></br><b> FirstName: </b>{user.firstName}</li>
+              <button onClick={() => deleteUser(user.id)}>delete</button>
+            </div>
+          ))}
+        </ul>
+      </div>
+    );
+  }
+
+  export default UsersList;
